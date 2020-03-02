@@ -64,6 +64,11 @@ func startParser(outputFileName string, itemUrlFormat string, catalogUrlFormat s
 			item.Perks = append(item.Perks, e.ChildAttr(".item", "data-id"))
 		})
 
+		if len(item.Perks) == 0 {
+			log.Printf("Skip because no perks: %v\n", item.Id)
+			return
+		}
+
 		line := fmt.Sprintf("dimwishlist:item=%s&perks=%s#notes:%s\n", item.Id, strings.Join(item.Perks, ","), item.Rating)
 
 		file.WriteString(line)
